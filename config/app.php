@@ -197,6 +197,7 @@ return [
         App\Providers\TelescopeServiceProvider::class,
 
         Barryvdh\Debugbar\ServiceProvider::class,
+        L5Swagger\L5SwaggerServiceProvider::class,
     ],
 
     /*
