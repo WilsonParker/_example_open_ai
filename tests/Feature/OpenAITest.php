@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use OpenAI\Laravel\Facades\OpenAI;
 use Tests\TestCase;
@@ -49,6 +50,7 @@ class OpenAITest extends TestCase
             // A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse
             // 'user' => '',
         ]);
+
         dump($result);
     }
 }
