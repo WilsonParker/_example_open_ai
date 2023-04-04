@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Prompt;
 use Illuminate\Database\Seeder;
 
 class PromptSeeder extends Seeder
@@ -12,6 +12,19 @@ class PromptSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $prompt = Prompt::create([
+            'title' => 'A cute baby sea otter',
+            'description' => 'A cute baby sea otter',
+            'template' => 'Cute baby sea otter doing [PROMPT] the weather [WEATHER]',
+            'user_id' => 1,
+        ]);
+
+        $prompt->options()->create([
+            'name' => 'WEATHER',
+        ]);
+
+        $prompt->options()->create([
+            'name' => 'PROMPT',
+        ]);
     }
 }
