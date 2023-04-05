@@ -25,9 +25,7 @@ class PromptGenerateResources extends BaseResources
     {
         return [
             'id' => $this->id,
-            'url' => $this->url,
-            'created_at' => $this->created_at,
-            'expired_at' => $this->expired_at,
+            'data' => $this->results,
         ];
     }
 

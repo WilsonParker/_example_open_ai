@@ -11,5 +11,5 @@ interface PromptGenerateServiceContract extends ServiceContract
 {
     public function store(Prompt $prompt, User $user, array $options): PromptGenerate;
 
-    public function callApi(PromptGenerate $promptGenerate): array;
+    public function callApi(PromptGenerate $promptGenerate): void;
 }

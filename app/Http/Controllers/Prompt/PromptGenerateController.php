@@ -7,6 +7,7 @@ use App\Http\Requests\StorePromptGenerateRequest;
 use App\Http\Requests\UpdatePromptGenerateRequest;
 use App\Models\Prompt;
 use App\Models\PromptGenerate;
+use App\Resources\Prompt\PromptGenerateResources;
 use App\Services\Prompt\PromptGenerateServiceContract;
 use OpenApi\Annotations as OA;
 
@@ -80,7 +81,7 @@ class PromptGenerateController extends BaseController
         $callback = function () use ($validated, $prompt) {
             $promptGenerate = $this->service->store($prompt, auth()->user(), $validated);
             $this->service->callApi($promptGenerate);
-            return $this->response($promptGenerate, 'prompt generate store success');
+            return $this->response(new PromptGenerateResources($promptGenerate), 'prompt generate store success');
         };
         $errorCallback = function (\Throwable $throwable) {
             dd($throwable);

@@ -18,4 +18,9 @@ class PromptGenerate extends BaseModel
     {
         return $this->hasMany(PromptGenerateOption::class);
     }
+
+    public function results(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PromptGenerateResult::class);
+    }
 }

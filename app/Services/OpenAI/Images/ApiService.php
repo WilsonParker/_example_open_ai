@@ -19,6 +19,6 @@ class ApiService
             // 'response_format' => 'url',
             // A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse
             // 'user' => '',
-        ]);
+        ])->toArray();
     }
 }
