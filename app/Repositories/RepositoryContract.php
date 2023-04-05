@@ -15,6 +15,8 @@ interface RepositoryContract
 
     public function create(array $data): Model;
 
+    public function createOrFirst(array $data): Model;
+
     public function update($id, array $data): Model;
 
     public function delete($id): bool;

@@ -14,11 +14,11 @@ class StorePromptGenerateRequest extends FormRequest
         return auth()->check();
     }
 
-    public function rules(): array
+    public function rules()
     {
         $prompt = $this->route('prompt');
         return $prompt->options->mapWithKeys(function ($option) {
-            return [strtolower($option->name) => 'required'];
+            return ["p{$option->getKey()}" => 'required'];
         })->toArray();
     }
 

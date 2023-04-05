@@ -5,8 +5,9 @@ namespace App\Providers;
 use App\Http\Controllers\Prompt\PromptGenerateController;
 use App\Models\PromptGenerate;
 use App\Repositories\Prompt\PromptGenerateRepository;
+use App\Services\OpenAI\Images\ApiService;
 use App\Services\Prompt\PromptGenerateService;
-use App\Services\ServiceContract;
+use App\Services\Prompt\PromptGenerateServiceContract;
 use Illuminate\Support\ServiceProvider;
 
 class ControllerServiceProvider extends ServiceProvider
@@ -21,11 +22,18 @@ class ControllerServiceProvider extends ServiceProvider
             fn() => new PromptGenerateRepository(PromptGenerate::class)
         );
         $this->app->singleton(
+            ApiService::class,
+            fn($app) => new ApiService()
+        );
+        $this->app->singleton(
             PromptGenerateService::class,
-            fn($app) => new PromptGenerateService($app->make(PromptGenerateRepository::class))
+            fn($app) => new PromptGenerateService(
+                $app->make(PromptGenerateRepository::class),
+                $app->make(ApiService::class)
+            )
         );
         $this->app->when(PromptGenerateController::class)
-                  ->needs(ServiceContract::class)
+                  ->needs(PromptGenerateServiceContract::class)
                   ->give(PromptGenerateService::class);
     }
 

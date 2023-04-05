@@ -30,6 +30,11 @@ class BaseRepository implements RepositoryContract
 
     public function create(array $data): Model
     {
+        return $this->model::create($data);
+    }
+
+    public function createOrFirst(array $data): Model
+    {
         return $this->model::firstOrCreate($data);
     }
 

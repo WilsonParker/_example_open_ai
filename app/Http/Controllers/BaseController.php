@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ServiceContract;
 use Illuminate\Support\Facades\DB;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -29,7 +28,6 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
  */
 class BaseController extends Controller
 {
-    public function __construct(protected ServiceContract $service) {}
 
     protected function transaction(callable $callback, callable $errorCallback = null)
     {
