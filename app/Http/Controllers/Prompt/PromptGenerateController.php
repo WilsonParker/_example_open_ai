@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Prompt;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\StorePromptGenerateRequest;
 use App\Http\Requests\UpdatePromptGenerateRequest;
+use App\Models\Prompt;
 use App\Models\PromptGenerate;
 use OpenApi\Annotations as OA;
 
@@ -70,11 +71,12 @@ class PromptGenerateController extends BaseController
      *      ),
      * )
      */
-    public function store(StorePromptGenerateRequest $request)
+    public function store(Prompt $prompt, StorePromptGenerateRequest $request)
     {
-        $validated = $request;
-        $callback = function () use ($validated) {
-            dd($validated);
+        $validated = $request->validated();
+        $callback = function () use ($validated, $prompt) {
+            $promptGenerate = $this->service->store($validated, $prompt);
+            return $this->response($promptGenerate, 'prompt generate store success');
         };
         $errorCallback = function (\Throwable $throwable) {};
         return $this->transaction($callback, $errorCallback);

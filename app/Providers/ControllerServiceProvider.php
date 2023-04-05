@@ -6,7 +6,7 @@ use App\Http\Controllers\Prompt\PromptGenerateController;
 use App\Models\PromptGenerate;
 use App\Repositories\Prompt\PromptGenerateRepository;
 use App\Services\Prompt\PromptGenerateService;
-use App\Services\Prompt\PromptGenerateServiceContract;
+use App\Services\ServiceContract;
 use Illuminate\Support\ServiceProvider;
 
 class ControllerServiceProvider extends ServiceProvider
@@ -25,7 +25,7 @@ class ControllerServiceProvider extends ServiceProvider
             fn($app) => new PromptGenerateService($app->make(PromptGenerateRepository::class))
         );
         $this->app->when(PromptGenerateController::class)
-                  ->needs(PromptGenerateServiceContract::class)
+                  ->needs(ServiceContract::class)
                   ->give(PromptGenerateService::class);
     }
 

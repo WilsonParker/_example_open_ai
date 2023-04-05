@@ -195,6 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
+        App\Providers\ControllerServiceProvider::class,
 
         Barryvdh\Debugbar\ServiceProvider::class,
         L5Swagger\L5SwaggerServiceProvider::class,

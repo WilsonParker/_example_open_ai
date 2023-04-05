@@ -19,7 +19,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware('auth:api')->group(function () {
-    Route::resource('prompt.generate', \App\Models\PromptGenerate::class)->only('store');
+    Route::resource('prompt.generate', \App\Http\Controllers\Prompt\PromptGenerateController::class)->only('store');
 
     Route::get('/user', function (Request $request) {
         return $request->user();

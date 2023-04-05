@@ -11,21 +11,15 @@ class StorePromptGenerateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
     public function rules(): array
     {
-        return [
-            'prompt' => [
-                'required',
-                'array'
-            ],
-        ];
+        $prompt = $this->route('prompt');
+        return $prompt->options->mapWithKeys(function ($option) {
+            return [strtolower($option->name) => 'required'];
+        })->toArray();
     }
+
 }

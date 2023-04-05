@@ -287,19 +287,11 @@
             }
         },
         "securitySchemes": {
-            "passport": {
-                "type": "oauth2",
-                "description": "Laravel passport oauth2 security.",
-                "in": "header",
-                "scheme": "https",
-                "flows": {
-                    "password": {
-                        "authorizationUrl": "http://localhost/oauth/authorize",
-                        "tokenUrl": "http://localhost/oauth/token",
-                        "refreshUrl": "http://localhost/token/refresh",
-                        "scopes": []
-                    }
-                }
+            "api_key_security_example": {
+                "type": "apiKey",
+                "description": "A short description for security scheme",
+                "name": "api_key",
+                "in": "header"
             }
         }
     }
