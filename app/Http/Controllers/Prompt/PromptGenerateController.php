@@ -29,26 +29,34 @@ class PromptGenerateController extends BaseController
     /**
      * Store a newly created resource in storage.
      * @OA\Post(
-     *     path="/api/prompt/generate",
+     *     path="/api/prompt/{prompt}/generate",
      *     summary="Adds a new prompt generate",
      *     tags={"prompt generate"},
      *     @OA\Parameter(
-     *         description="weather example",
+     *         description="prompt id example",
+     *         in="path",
+     *         name="prompt",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         @OA\Examples(example="1", value="1", summary="1"),
+     *     ),
+     *     @OA\Parameter(
+     *         description="weather value example",
      *         in="query",
      *         name="weather",
      *         required=true,
      *         @OA\Schema(type="string"),
-     *         @OA\Examples(example="sunny", value="sunny", summary="weather"),
-     *         @OA\Examples(example="wendy", value="wendy", summary="weather"),
+     *         @OA\Examples(example="sunny", value="sunny", summary="sunny"),
+     *         @OA\Examples(example="wendy", value="wendy", summary="wendy"),
      *     ),
      *     @OA\Parameter(
-     *         description="prompt example",
+     *         description="prompt value example",
      *         in="query",
      *         name="prompt",
      *         required=true,
      *         @OA\Schema(type="string"),
-     *         @OA\Examples(example="banging clams", value="banging clams", summary="prompt"),
-     *         @OA\Examples(example="catching fish", value="catching fish", summary="prompt"),
+     *         @OA\Examples(example="banging clams", value="banging clams", summary="banging clams"),
+     *         @OA\Examples(example="catching fish", value="catching fish", summary="catching fish"),
      *     ),
      *     @OA\Response(
      *         response=200,

@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
-use Carbon\Carbon;
 use GuzzleHttp\Client;
 use OpenAI\Laravel\Facades\OpenAI;
 use Tests\TestCase;
