@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePromptGenerateRequest;
 use App\Models\Prompt;
 use App\Models\PromptGenerate;
 use App\Resources\Prompt\PromptGenerateResources;
+use App\Services\OpenAI\Images\ImageSize;
 use App\Services\Prompt\PromptGenerateServiceContract;
 use OpenApi\Annotations as OA;
 
@@ -48,7 +49,7 @@ class PromptGenerateController extends BaseController
      *     @OA\Parameter(
      *         description="weather value example",
      *         in="query",
-     *         name="weather",
+     *         name="p1",
      *         required=true,
      *         @OA\Schema(type="string"),
      *         @OA\Examples(example="sunny", value="sunny", summary="sunny"),
@@ -57,7 +58,7 @@ class PromptGenerateController extends BaseController
      *     @OA\Parameter(
      *         description="prompt value example",
      *         in="query",
-     *         name="prompt",
+     *         name="p2",
      *         required=true,
      *         @OA\Schema(type="string"),
      *         @OA\Examples(example="banging clams", value="banging clams", summary="banging clams"),
@@ -80,13 +81,12 @@ class PromptGenerateController extends BaseController
         $validated = $request->validated();
         $callback = function () use ($validated, $prompt) {
             $promptGenerate = $this->service->store($prompt, auth()->user(), $validated);
-            $this->service->callApi($promptGenerate);
+            $this->service->callApi($promptGenerate, 1, ImageSize::s256);
             return $this->response(new PromptGenerateResources($promptGenerate), 'prompt generate store success');
         };
-        $errorCallback = function (\Throwable $throwable) {
+        return $this->transaction($callback, function (\Throwable $throwable) {
             dd($throwable);
-        };
-        return $this->transaction($callback, $errorCallback);
+        });
     }
 
     /**

@@ -25,7 +25,7 @@ class PromptGenerateResources extends BaseResources
     {
         return [
             'id' => $this->id,
-            'data' => $this->results,
+            'data' => $this->results->map(fn($item) => new PromptGenerateResultResources($item)),
         ];
     }
 

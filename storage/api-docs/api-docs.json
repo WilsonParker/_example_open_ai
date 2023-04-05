@@ -166,7 +166,7 @@
                         }
                     },
                     {
-                        "name": "weather",
+                        "name": "p1",
                         "in": "query",
                         "description": "weather value example",
                         "required": true,
@@ -185,7 +185,7 @@
                         }
                     },
                     {
-                        "name": "prompt",
+                        "name": "p2",
                         "in": "query",
                         "description": "prompt value example",
                         "required": true,
@@ -287,12 +287,17 @@
             }
         },
         "securitySchemes": {
-            "api_key_security_example": {
+            "bearer_token": {
                 "type": "apiKey",
-                "description": "A short description for security scheme",
-                "name": "api_key",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
                 "in": "header"
             }
         }
-    }
+    },
+    "security": [
+        {
+            "bearer_token": []
+        }
+    ]
 }
