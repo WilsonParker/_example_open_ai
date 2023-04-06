@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -42,20 +43,20 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function (Throwable $throwable) {
             //
         });
 
         $this->renderable(function (\Throwable $throwable) {
-            $code = $throwable->getCode() ?: 500;
+            $code = $throwable->getCode() ?: ResponseAlias::HTTP_INTERNAL_SERVER_ERROR;
             if ($throwable instanceof \Illuminate\Validation\ValidationException) {
-                $code = 401;
+                $code = ResponseAlias::HTTP_UNAUTHORIZED;
             } else if ($throwable instanceof NotFoundHttpException) {
-                $code = 404;
+                $code = ResponseAlias::HTTP_NOT_FOUND;
             }
             return response()->json([
                 'message' => $throwable->getMessage(),
-            ], $code);
+            ], is_string($code) ? ResponseAlias::HTTP_INTERNAL_SERVER_ERROR : $code);
         });
     }
 }

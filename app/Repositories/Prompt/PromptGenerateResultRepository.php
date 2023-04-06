@@ -16,7 +16,6 @@ class PromptGenerateResultRepository extends BaseRepository
     ): PromptGenerateResult {
         return $promptGenerate->results()->create([
             'url' => $url,
-            'expired_at' => $created->copy()->addHours(2),
             'created_at' => $created,
         ]);
     }

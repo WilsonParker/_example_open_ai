@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Prompt;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\StorePromptGenerateRequest;
 use App\Http\Requests\UpdatePromptGenerateRequest;
+use App\Http\Response\ResponseTemplate;
 use App\Models\Prompt;
 use App\Models\PromptGenerate;
 use App\Resources\Prompt\PromptGenerateResources;
@@ -75,6 +76,8 @@ class PromptGenerateController extends BaseController
      *         ),
      *      ),
      * )
+     *
+     * @throws \Throwable
      */
     public function store(Prompt $prompt, StorePromptGenerateRequest $request)
     {
@@ -82,11 +85,9 @@ class PromptGenerateController extends BaseController
         $callback = function () use ($validated, $prompt) {
             $promptGenerate = $this->service->store($prompt, auth()->user(), $validated);
             $this->service->callApi($promptGenerate, 1, ImageSize::s256);
-            return $this->response(new PromptGenerateResources($promptGenerate), 'prompt generate store success');
+            return new ResponseTemplate(new PromptGenerateResources($promptGenerate), 'prompt generate store success');
         };
-        return $this->transaction($callback, function (\Throwable $throwable) {
-            dd($throwable);
-        });
+        return $this->transaction($callback);
     }
 
     /**

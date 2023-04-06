@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use OpenApi\Annotations as OA;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 /**
  * @OA\Info(
@@ -29,6 +28,9 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 class BaseController extends Controller
 {
 
+    /**
+     * @throws \Throwable
+     */
     protected function transaction(callable $callback, callable $errorCallback = null)
     {
         $result = null;
@@ -37,10 +39,12 @@ class BaseController extends Controller
             $result = $callback();
             DB::commit();
         } catch (\Throwable $throwable) {
+            DB::rollBack();
             if (is_callable($errorCallback)) {
                 $result = $errorCallback($throwable);
+            } else {
+                throw $throwable;
             }
-            DB::rollBack();
             // Todo : Log
         }
         return $result;
@@ -59,11 +63,4 @@ class BaseController extends Controller
         return $result;
     }
 
-    protected function response($data, string $message, int $code = ResponseAlias::HTTP_OK)
-    {
-        return response()->json([
-            'message' => $message,
-            'data' => $data,
-        ], $code);
-    }
 }

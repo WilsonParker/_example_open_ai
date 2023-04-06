@@ -26,6 +26,7 @@ class PromptGenerateService implements PromptGenerateServiceContract
         $promptGenerate = $this->repository->create([
             'prompt_id' => $prompt->getKey(),
             'user_id' => $user->getKey(),
+            'expired_at' => Carbon::now()->addHours(2),
         ]);
         foreach ($options as $key => $value) {
             $promptGenerate->options()->create([
