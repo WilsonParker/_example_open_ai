@@ -17,7 +17,6 @@ return new class extends Migration {
                   ->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
-            $table->timestamp('expired_at')->nullable(false)->comment('result expired at');
             $table->timestamps();
             $table->softDeletes();
         });

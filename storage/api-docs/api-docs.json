@@ -280,6 +280,34 @@
                             "url": {
                                 "description": "image url",
                                 "type": "string"
+                            },
+                            "created_at": {
+                                "description": "created date",
+                                "type": "timestamp"
+                            },
+                            "expired_at": {
+                                "description": "expired date",
+                                "type": "timestamp"
+                            }
+                        }
+                    }
+                ]
+            },
+            "PromptGenerateResultResources": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BaseResources"
+                    },
+                    {
+                        "properties": {
+                            "id": {
+                                "description": "id",
+                                "type": "integer"
+                            },
+                            "url": {
+                                "description": "image url",
+                                "type": "string"
                             }
                         }
                     }
